@@ -1,10 +1,9 @@
 import { Module } from '@nestjs/common';
-import { TodosController } from './controllers/todos.controller';
-import { TodosService } from './services/todos.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import * as process from 'process';
-import { TodoSchema } from './schemas/todo.schema';
 import { ConfigModule } from '@nestjs/config';
+import { TodoModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -12,9 +11,10 @@ import { ConfigModule } from '@nestjs/config';
     MongooseModule.forRoot(
       process.env.DATABASE_URL || 'mongodb://localhost/todos',
     ),
-    MongooseModule.forFeature([{ name: 'Todo', schema: TodoSchema }]),
+    TodoModule,
+    AuthModule,
   ],
-  controllers: [TodosController],
-  providers: [TodosService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
