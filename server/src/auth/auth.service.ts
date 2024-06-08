@@ -19,7 +19,10 @@ export class AuthService {
     if (!user || !(await bcrypt.compare(data.password, user.password)))
       throw new UnauthorizedException('Invalid credentials');
     const payload = { sub: user._id, email: user.email };
-    return await this.jwtService.signAsync(payload);
+    const token = await this.jwtService.signAsync(payload);
+    return {
+      token: token,
+    };
   }
 
   async register(data: RegisterDto) {
@@ -28,6 +31,9 @@ export class AuthService {
     const newUser = new this.userModel(data);
     const user = await newUser.save();
     const payload = { sub: user._id, email: user.email };
-    return await this.jwtService.signAsync(payload);
+    const token = await this.jwtService.signAsync(payload);
+    return {
+      token: token,
+    };
   }
 }
