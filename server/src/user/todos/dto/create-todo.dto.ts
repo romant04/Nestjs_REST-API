@@ -2,6 +2,7 @@ import {
   IsBoolean,
   IsDate,
   IsNotEmpty,
+  IsOptional,
   IsString,
   MaxLength,
 } from 'class-validator';
@@ -19,6 +20,7 @@ export class CreateTodoDto {
     return obj[key] === 'true' ? true : obj[key] === 'false' ? false : obj[key];
   })
   @IsBoolean()
+  @IsOptional()
   readonly done: boolean;
   @Transform(({ value }) => new Date(value))
   @IsDate()

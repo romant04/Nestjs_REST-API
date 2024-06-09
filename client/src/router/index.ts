@@ -20,6 +20,12 @@ const router = createRouter({
       name: 'register',
       component: () => import('../views/RegisterView.vue'),
       meta: { title: 'Register' }
+    },
+    {
+      path: '/add-todo',
+      name: 'add-todo',
+      component: () => import('../views/AddTodoView.vue'),
+      meta: { title: 'Add Todo' }
     }
   ]
 })

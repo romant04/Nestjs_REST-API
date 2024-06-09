@@ -31,7 +31,6 @@ const login = async (e: Event) => {
     password.value = ''
   }
 
-  console.log(data)
   if (data.token) {
     SaveAndRedirect(data.token)
   }
@@ -44,24 +43,22 @@ const SaveAndRedirect = (token: string) => {
 </script>
 
 <template>
-  <div class="flex h-full justify-center items-center w-full">
+  <div class="flex h-full justify-center items-center w-full pb-20">
     <form @submit="login" class="flex flex-col gap-5 md:w-2/5 w-full px-5 items-center">
       <h1 class="text-3xl mb-6">Login</h1>
       <div class="w-full items-center">
-        <label for="email" class="text-lg">Email</label>
+        <label class="text-lg">Email</label>
         <input
           v-model="email"
           type="email"
-          id="email"
           class="border-2 border-gray-200 rounded-sm w-full p-1"
         />
       </div>
       <div class="w-full items-center">
-        <label for="password" class="text-lg">Password</label>
+        <label class="text-lg">Password</label>
         <input
           v-model="password"
           type="password"
-          id="password"
           class="border-2 border-gray-200 rounded-sm w-full p-1"
         />
       </div>

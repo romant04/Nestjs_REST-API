@@ -42,7 +42,7 @@ const signOut = () => {
         <p class="font-semibold">Logged in as {{ email }}</p>
         <button @click="signOut">Sign out</button>
       </div>
-      <nav v-if="!email" class="flex gap-3">
+      <nav v-if="!email" class="flex gap-5">
         <RouterLink to="/login" class="text-lg">Login</RouterLink>
         <RouterLink to="/register" class="text-lg">Register</RouterLink>
       </nav>

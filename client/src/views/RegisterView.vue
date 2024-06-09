@@ -1,7 +1,83 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useUserStore } from '@/store/user-store'
+
+const router = useRouter()
+
+const email = ref('')
+const password = ref('')
+const passwordConfirmation = ref('')
+
+const store = useUserStore()
+
+const register = async (e: Event) => {
+  e.preventDefault()
+
+  const response = await fetch('http://localhost:8080/auth/register', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      email: email.value,
+      password: password.value,
+      passwordConfirmation: passwordConfirmation.value
+    })
+  })
+  const data = await response.json()
+
+  if (!response.ok) {
+    alert(data.message)
+    email.value = ''
+    password.value = ''
+    passwordConfirmation.value = ''
+  }
+
+  if (data.token) {
+    SaveAndRedirect(data.token)
+  }
+}
+const SaveAndRedirect = (token: string) => {
+  localStorage.setItem('token', token)
+  store.setUser(email.value, token)
+  router.push({ path: '/' })
+}
+</script>
 
 <template>
-  <h1>Register page</h1>
+  <div class="flex h-full justify-center items-center w-full pb-20">
+    <form @submit="register" class="flex flex-col gap-5 md:w-2/5 w-full px-5 items-center">
+      <h1 class="text-3xl mb-6">Register</h1>
+      <div class="w-full items-center">
+        <label class="text-lg">Email</label>
+        <input
+          v-model="email"
+          type="email"
+          class="border-2 border-gray-200 rounded-sm w-full p-1"
+        />
+      </div>
+      <div class="w-full items-center">
+        <label class="text-lg">Password</label>
+        <input
+          v-model="password"
+          type="password"
+          class="border-2 border-gray-200 rounded-sm w-full p-1"
+        />
+      </div>
+      <div class="w-full items-center">
+        <label class="text-lg">Password confirmation</label>
+        <input
+          v-model="passwordConfirmation"
+          type="password"
+          class="border-2 border-gray-200 rounded-sm w-full p-1"
+        />
+      </div>
+      <button
+        class="bg-green-700 text-white text-lg px-6 py-2 rounded-sm w-full hover:bg-green-600"
+      >
+        Register
+      </button>
+    </form>
+  </div>
 </template>
-
-<style scoped></style>
