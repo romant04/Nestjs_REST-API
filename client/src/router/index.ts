@@ -4,9 +4,10 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
+      path: '/:upcoming?',
       name: 'home',
       component: () => import('../views/HomeView.vue'),
+      props: true,
       meta: { title: 'Home' }
     },
     {
@@ -26,6 +27,13 @@ const router = createRouter({
       name: 'add-todo',
       component: () => import('../views/AddTodoView.vue'),
       meta: { title: 'Add Todo' }
+    },
+    {
+      path: '/edit-todo/:id',
+      name: 'edit-todo',
+      component: () => import('../views/EditTodoView.vue'),
+      props: true,
+      meta: { title: 'Edit Todo' }
     }
   ]
 })
